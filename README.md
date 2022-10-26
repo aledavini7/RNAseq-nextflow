@@ -1,2 +1,2 @@
-# RNAseq-nextfow
+# RNAseq-nextflow
 RNA-seq analysis with Nextflow
