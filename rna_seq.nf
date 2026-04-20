@@ -24,10 +24,12 @@ include { star } from './modules/mapping.nf'
 workflow {
 
 	Channel
-		.fromFilePairs( '/hpcnfs/scratch/temporary/adav2/*/*_{R1,R2}.fastq.gz' )
-        //.fromFilePairs( '/hpcnfs/scratch/ED/davini/data/rps12_stjude/FASTQ/SJDLBCL062288_C1/*_{R1,R2}.fastq.gz' )
+		.fromFilePairs( '/hpcscratch/ieo/ieo5898/rna_seq_invitro_lonca_talazo/ly18/*/*_{R1,R2}*.fastq.gz' )
+        //.fromFilePairs( '/hpcnfs/scratch/ED/Lonca/RNA_seq_PDX/*/*_{R1,R2}.fastq.gz' )
         .set { reads_ch }
 	
+    reads_ch.view()
+
 	qc_ch = fastqc(reads_ch)
     screen_ch = fastq_screen(reads_ch)
 
@@ -39,6 +41,7 @@ workflow {
     screen_trimmed_ch = fastq_screen_trimm(trimmed_ch)
 
     multiqc_trimm_ch = multiqc_trimm(qc_trimmed_ch.mix(screen_trimmed_ch).collect())
+
 
     star_ch = star(trimmed_ch)
 
