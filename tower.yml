@@ -1,0 +1,9 @@
+reports:
+  "multiqc_raw/multiqc_report.html":
+    display: "html"
+  "multiqc_trimm/multiqc_report.html":
+    display: "html"
+  "mapping/*/*Aligned.sortedByCoord.out.bam":
+    display: "bam"
+  "*/*_strandness.txt":
+    display: "text"

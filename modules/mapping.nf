@@ -16,7 +16,7 @@ process star {
 
     script:
     """
-    STAR --runThreadN $task.cpus --readFilesCommand zcat --readFilesIn ${trimmed_reads[0]} ${trimmed_reads[1]} --outFileNamePrefix ${sample_id} --genomeDir $params.index --sjdbGTFfile $params.gtf --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonicalUnannotated --quantMode GeneCounts --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 20000000000
+    STAR --runThreadN $task.cpus --readFilesCommand zcat --readFilesIn ${trimmed_reads[0]} ${trimmed_reads[1]} --outFileNamePrefix ${sample_id} --genomeDir ${params.index} --sjdbGTFfile ${params.gtf_rnaseq} --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonicalUnannotated --quantMode GeneCounts --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 20000000000
     """
 
 }

@@ -1,4 +1,4 @@
-// Second module: Trimming with bbduk
+// Fourth module: Trimming with bbduk
 
 process infer {
 
@@ -12,7 +12,7 @@ process infer {
 
     script:
     """
-    infer_experiment.py -r $params.gtf -i $bams > ${sample_id}_strandness.txt
+    infer_experiment.py -r ${params.gtf_bed_strandness} -i $bams > ${sample_id}_strandness.txt
     """
 
 }

@@ -1,34 +1,13 @@
-/*
- * pipeline input parameters
- */
-nextflow.enable.dsl = 2
-
-params.outdir = "results"
-params.gtf = "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/gencode.v39.primary_assembly.annotation.gtf"
-params.index = "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/STAR"
-
-log.info """\
-    R N A S E Q - N F   P I P E L I N E
-    ===================================
-    outdir       : ${params.outdir}
-    human_gtf    : ${params.gtf}
-    star_index   : ${params.index}
-    """
-    .stripIndent()
-
 
 include { fastqc; fastq_screen; multiqc; fastqc as fastqc_trimm; fastq_screen as fastq_screen_trimm; multiqc_trimm } from './modules/qc.nf'
 include { trimming } from './modules/trimming.nf'
 include { star } from './modules/mapping.nf'
 
-workflow {
+workflow RNA_SEQ {
 
 	Channel
-		.fromFilePairs( '/hpcscratch/ieo/ieo5898/rna_seq_invitro_lonca_talazo/ly18/*/*_{R1,R2}*.fastq.gz' )
-        //.fromFilePairs( '/hpcnfs/scratch/ED/Lonca/RNA_seq_PDX/*/*_{R1,R2}.fastq.gz' )
-        .set { reads_ch }
-	
-    reads_ch.view()
+    .fromFilePairs(params.reads, checkIfExists: true)
+    .set { reads_ch }
 
 	qc_ch = fastqc(reads_ch)
     screen_ch = fastq_screen(reads_ch)
