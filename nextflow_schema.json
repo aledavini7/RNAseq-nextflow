@@ -1,80 +1,51 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "https://raw.githubusercontent.com///nextflow_schema.json",
-  "title": " pipeline parameters",
+  "title": "Pipeline parameters",
   "description": "",
   "type": "object",
-  "$defs": {
-    "input_output": {
-      "title": "Input/output",
-      "type": "object",
-      "description": "Define where the pipeline should find input data and save output data.",
-      "default": "",
-      "properties": {
-        "reads": {
-          "type": "string",
-          "description": "fastq reads from RNAseq experiment",
-          "help_text": ""
-        },
-        "bams": {
-          "type": "string",
-          "description": "aligned reads obtained after mapping"
-        },
-        "outdir": {
-          "type": "string",
-          "format": "directory-path",
-          "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
-          "fa_icon": "fas fa-folder-open",
-          "default": "results"
-        }
-      },
-      "required": ["outdir"]
+  "properties": {
+    "reads": {
+      "type": "string",
+      "format": "file-path",
+      "description": "FASTQ reads from RNA-seq experiment",
+      "help_text": ""
     },
-    "reference": {
-      "title": "Reference",
-      "type": "object",
-      "description": "Genome reference",
-      "default": "",
-      "properties": {
-        "gtf_rnaseq": {
-          "type": "string",
-          "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/gencode.v39.primary_assembly.annotation.gtf",
-          "description": "genome reference file"
-        },
-        "gtf_bed_strandness": {
-          "type": "string",
-          "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/gencode.v39.primary_assembly.annotation.gtf.bed",
-          "description": "genome reference bed file"
-        },
-        "index": {
-          "type": "string",
-          "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/STAR",
-          "description": "genome reference index file"
-        }
-      }
+    "bams": {
+      "type": "string",
+      "format": "file-path",
+      "description": "Aligned reads obtained after mapping"
     },
-    "workflow_options": {
-      "title": "Workflow options",
-      "type": "object",
-      "description": "",
-      "default": "",
-      "properties": {
-        "run_strandness": {
-          "type": "boolean",
-          "description": "optional workflow to infer strandness of reads"
-        }
-      }
+    "outdir": {
+      "type": "string",
+      "format": "directory-path",
+      "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+      "fa_icon": "fas fa-folder-open",
+      "default": "results"
+    },
+    "gtf_rnaseq": {
+      "type": "string",
+      "format": "file-path",
+      "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/gencode.v39.primary_assembly.annotation.gtf",
+      "description": "Genome reference file"
+    },
+    "gtf_bed_strandness": {
+      "type": "string",
+      "format": "file-path",
+      "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/gencode.v39.primary_assembly.annotation.gtf.bed",
+      "description": "Genome reference BED file"
+    },
+    "index": {
+      "type": "string",
+      "format": "directory-path",
+      "default": "/hpcnfs/scratch/ED/genome/GRCh38_human_v39/STAR",
+      "description": "Genome reference index directory"
+    },
+    "run_strandness": {
+      "type": "boolean",
+      "description": "Optional workflow to infer strandness of reads",
+      "default": false
     }
   },
-  "allOf": [
-    {
-      "$ref": "#/$defs/input_output"
-    },
-    {
-      "$ref": "#/$defs/reference"
-    },
-    {
-      "$ref": "#/$defs/workflow_options"
-    }
-  ]
+  "required": ["outdir"]
 }
